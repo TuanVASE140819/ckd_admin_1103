@@ -10,174 +10,530 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 import {
-    Row,
-    Col,
-    Card,
-    Radio,
-    Table,
-    Upload,
-    message,
-    Progress,
-    Button,
-    Avatar,
-    Typography,
-  } from "antd";
-  
-  import { RightOutlined, ToTopOutlined } from "@ant-design/icons";
-  import { Link } from "react-router-dom";
-  import card from "../assets/images/info-card-1.jpg";
-  import Text from "antd/lib/typography/Text";
-  
-  const { Title } = Typography;
-  
-  const formProps = {
-    name: "file",
-    action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
-    headers: {
-      authorization: "authorization-text",
-    },
-    onChange(info) {
-      if (info.file.status !== "uploading") {
-        console.log(info.file, info.fileList);
-      }
-      if (info.file.status === "done") {
-        message.success(`${info.file.name} file uploaded successfully`);
-      } else if (info.file.status === "error") {
-        message.error(`${info.file.name} file upload failed.`);
-      }
-    },
-  };
-  
-  function News() {
-    const onChange = (e) => console.log(`radio checked:${e.target.value}`);
-  
-    return (
+  Row,
+  Col,
+  Card,
+  Radio,
+  Table,
+  Upload,
+  message,
+  Progress,
+  Button,
+  Avatar,
+  Typography,
+} from "antd";
+
+import {
+  ToTopOutlined,
+  EyeFilled,
+  EyeInvisibleFilled,
+  EditOutlined,
+  DeleteOutlined,
+} from "@ant-design/icons";
+import { Link } from "react-router-dom";
+
+// Images
+import ava1 from "../assets/images/logo-shopify.svg";
+import ava2 from "../assets/images/logo-atlassian.svg";
+import ava3 from "../assets/images/logo-slack.svg";
+import ava5 from "../assets/images/logo-jira.svg";
+import ava6 from "../assets/images/logo-invision.svg";
+import face from "../assets/images/face-1.jpg";
+import face2 from "../assets/images/face-2.jpg";
+import face3 from "../assets/images/face-3.jpg";
+import face4 from "../assets/images/face-4.jpg";
+import face5 from "../assets/images/face-5.jpeg";
+import face6 from "../assets/images/face-6.jpeg";
+import pencil from "../assets/images/pencil.svg";
+
+import { Checkbox } from "antd";
+
+const onChange = (e) => {
+  console.log(`checked = ${e.target.checked}`);
+};
+const { Title } = Typography;
+
+// table code start
+const columns = [
+  {
+    //STT
+    title: "ID",
+    dataIndex: "key",
+    key: "key",
+    width: "5%",
+  },
+  {
+    // Hình
+    title: "Hình",
+    dataIndex: "name",
+    key: "name",
+    width: "10%",
+  },
+  // Tiêu đề
+  {
+    title: "Tiêu đề",
+    dataIndex: "function",
+    key: "function",
+    width: "15%",
+  },
+  // Người tạo
+  {
+    title: "Hiện thị",
+    dataIndex: "status",
+    key: "status",
+    width: "10%",
+  },
+  {
+    title: "Mới nhất",
+    dataIndex: "employed",
+    key: "employed",
+    width: "10%",
+  },
+  {
+    title: "Hành động",
+    dataIndex: "actions",
+    key: "actions",
+    width: "10%",
+  },
+];
+
+const data = [
+  {
+    key: "1",
+    name: (
       <>
-         <Row gutter={[24, 0]}>
-            <Col xs={24} md={12} sm={24} lg={12} xl={14} className="mb-24">
-              <Card bordered={false} className="criclebox h-full">
-                <Row gutter>
-                  <Col
-                    xs={24}
-                    md={12}
-                    sm={24}
-                    lg={12}
-                    xl={14}
-                    className="mobile-24"
-                  >
-                    <div className="h-full col-content p-20">
-                      <div className="ant-muse">
-                        <Text>
-                          Thương hiệu
-                        </Text>
-                        <Title level={5}>
-                          CKD
-                        </Title>
-                      </div>
-                    </div>
-                  </Col>
-                  <Col
-                    xs={24}
-                    md={12}
-                    sm={24}
-                    lg={12}
-                    xl={10}
-                    className="col-img"
-                  >
-                    <div className="ant-cret text-right">
-                      <img src={card} alt="" className="border10" />
-                    </div>
-                  </Col>
-                </Row>
-              </Card>
-            </Col>
-  
-            <Col xs={24} md={12} sm={24} lg={12} xl={10} className="mb-24">
-              <Card bordered={false} className="criclebox card-info-2 h-full">
-                <div className="gradent h-full col-content">
-                  <div className="card-content">
-                    <Title level={5}>Dòng</Title>
-                    <p>
-                     Làm đẹp
-                    </p>
-                    <p>
-                     chăm sóc da
-                    </p>
-                    <p>
-                      Mặt nạ
-                    </p>
-                    <p>
-                      ...
-                    </p>
-                  </div>
-                </div>
-              </Card>
-            </Col>
-          </Row>
-          <Row gutter={[24, 0]}>
-            <Col xs={24} md={12} sm={24} lg={12} xl={14} className="mb-24">
-              <Card bordered={false} className="criclebox h-full">
-                <Row gutter>
-                  <Col
-                    xs={24}
-                    md={12}
-                    sm={24}
-                    lg={12}
-                    xl={14}
-                    className="mobile-24"
-                  >
-                    <div className="h-full col-content p-20">
-                      <div className="ant-muse">
-                        <Text>
-                          Thương hiệu
-                        </Text>
-                        <Title level={5}>
-                          CKD
-                        </Title>
-                      </div>
-                    </div>
-                  </Col>
-                  <Col
-                    xs={24}
-                    md={12}
-                    sm={24}
-                    lg={12}
-                    xl={10}
-                    className="col-img"
-                  >
-                    <div className="ant-cret text-right">
-                      <img src={card} alt="" className="border10" />
-                    </div>
-                  </Col>
-                </Row>
-              </Card>
-            </Col>
-  
-            <Col xs={24} md={12} sm={24} lg={12} xl={10} className="mb-24">
-              <Card bordered={false} className="criclebox card-info-2 h-full">
-                <div className="gradent h-full col-content">
-                  <div className="card-content">
-                    <Title level={5}>Dòng</Title>
-                    <p>
-                     Làm đẹp
-                    </p>
-                    <p>
-                     chăm sóc da
-                    </p>
-                    <p>
-                      Mặt nạ
-                    </p>
-                    <p>
-                      ...
-                    </p>
-                  </div>
-                </div>
-              </Card>
-            </Col>
-          </Row>
+        <Avatar.Group>
+          <Avatar
+            className="shape-avatar"
+            shape="square"
+            size={40}
+            src={face2}
+          ></Avatar>
+        </Avatar.Group>{" "}
       </>
-    );
-  }
+    ),
+    function: (
+      <>
+        <div className="author-info">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do</p>
+        </div>
+      </>
+    ),
+
+    status: (
+      <>
+        {/*  Bật tắt svg icon con mắt */}
+        <EyeFilled
+          style={{
+            fontSize: "20px",
+            color: "#f58a78",
+          }}
+        />
+      </>
+    ),
+    employed: (
+      <>
+        <Checkbox
+          onChange={onChange}
+          style={{
+            fontSize: "20px",
+            color: "#f58a78",
+          }}
+        />
+      </>
+    ),
+    actions: (
+      <>
+        <EditOutlined
+          style={{
+            fontSize: "20px",
+            color: "#f58a78",
+            marginRight: "10px",
+          }}
+        />
+        <DeleteOutlined style={{ fontSize: "20px", color: "#f58a78" }} />
+      </>
+    ),
+  },
+  {
+    key: "2",
+    name: (
+      <>
+        <Avatar.Group>
+          <Avatar
+            className="shape-avatar"
+            shape="square"
+            size={40}
+            src={face2}
+          ></Avatar>
+        </Avatar.Group>{" "}
+      </>
+    ),
+    function: (
+      <>
+        <div className="author-info">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do</p>
+        </div>
+      </>
+    ),
+
+    status: (
+      <>
+        {/*  Bật tắt svg icon con mắt */}
+        <EyeFilled
+          style={{
+            fontSize: "20px",
+            color: "#f58a78",
+          }}
+        />
+      </>
+    ),
+    employed: (
+      <>
+        <Checkbox
+          onChange={onChange}
+          style={{
+            fontSize: "20px",
+            color: "#f58a78",
+          }}
+        />
+      </>
+    ),
+    actions: (
+      <>
+        <EditOutlined
+          style={{
+            fontSize: "20px",
+            color: "#f58a78",
+            marginRight: "10px",
+          }}
+        />
+        <DeleteOutlined style={{ fontSize: "20px", color: "#f58a78" }} />
+      </>
+    ),
+  },
+  {
+    key: "3",
+    name: (
+      <>
+        <Avatar.Group>
+          <Avatar
+            className="shape-avatar"
+            shape="square"
+            size={40}
+            src={face2}
+          ></Avatar>
+        </Avatar.Group>{" "}
+      </>
+    ),
+    function: (
+      <>
+        <div className="author-info">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do</p>
+        </div>
+      </>
+    ),
+
+    status: (
+      <>
+        {/*  Bật tắt svg icon con mắt */}
+        <EyeFilled
+          style={{
+            fontSize: "20px",
+            color: "#f58a78",
+          }}
+        />
+      </>
+    ),
+    employed: (
+      <>
+        <Checkbox
+          onChange={onChange}
+          style={{
+            fontSize: "20px",
+            color: "#f58a78",
+          }}
+        />
+      </>
+    ),
+    actions: (
+      <>
+        <EditOutlined
+          style={{
+            fontSize: "20px",
+            color: "#f58a78",
+            marginRight: "10px",
+          }}
+        />
+        <DeleteOutlined style={{ fontSize: "20px", color: "#f58a78" }} />
+      </>
+    ),
+  },
+  {
+    key: "4",
+    name: (
+      <>
+        <Avatar.Group>
+          <Avatar
+            className="shape-avatar"
+            shape="square"
+            size={40}
+            src={face2}
+          ></Avatar>
+        </Avatar.Group>{" "}
+      </>
+    ),
+    function: (
+      <>
+        <div className="author-info">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do</p>
+        </div>
+      </>
+    ),
+
+    status: (
+      <>
+        {/*  Bật tắt svg icon con mắt */}
+        <EyeFilled
+          style={{
+            fontSize: "20px",
+            color: "#f58a78",
+          }}
+        />
+      </>
+    ),
+    employed: (
+      <>
+        <Checkbox
+          onChange={onChange}
+          style={{
+            fontSize: "20px",
+            color: "#f58a78",
+          }}
+        />
+      </>
+    ),
+    actions: (
+      <>
+        <EditOutlined
+          style={{
+            fontSize: "20px",
+            color: "#f58a78",
+            marginRight: "10px",
+          }}
+        />
+        <DeleteOutlined style={{ fontSize: "20px", color: "#f58a78" }} />
+      </>
+    ),
+  },
+  {
+    key: "5",
+    name: (
+      <>
+        <Avatar.Group>
+          <Avatar
+            className="shape-avatar"
+            shape="square"
+            size={40}
+            src={face2}
+          ></Avatar>
+        </Avatar.Group>{" "}
+      </>
+    ),
+    function: (
+      <>
+        <div className="author-info">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do</p>
+        </div>
+      </>
+    ),
+
+    status: (
+      <>
+        {/*  Bật tắt svg icon con mắt */}
+        <EyeFilled
+          style={{
+            fontSize: "20px",
+            color: "#f58a78",
+          }}
+        />
+      </>
+    ),
+    employed: (
+      <>
+        <Checkbox
+          onChange={onChange}
+          style={{
+            fontSize: "20px",
+            color: "#f58a78",
+          }}
+        />
+      </>
+    ),
+    actions: (
+      <>
+        <EditOutlined
+          style={{
+            fontSize: "20px",
+            color: "#f58a78",
+            marginRight: "10px",
+          }}
+        />
+        <DeleteOutlined style={{ fontSize: "20px", color: "#f58a78" }} />
+      </>
+    ),
+  },
+  {
+    key: "6",
+    name: (
+      <>
+        <Avatar.Group>
+          <Avatar
+            className="shape-avatar"
+            shape="square"
+            size={40}
+            src={face2}
+          ></Avatar>
+        </Avatar.Group>{" "}
+      </>
+    ),
+    function: (
+      <>
+        <div className="author-info">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do</p>
+        </div>
+      </>
+    ),
+
+    status: (
+      <>
+        {/*  Bật tắt svg icon con mắt */}
+        <EyeFilled
+          style={{
+            fontSize: "20px",
+            color: "#f58a78",
+          }}
+        />
+      </>
+    ),
+    employed: (
+      <>
+        <Checkbox
+          onChange={onChange}
+          style={{
+            fontSize: "20px",
+            color: "#f58a78",
+          }}
+        />
+      </>
+    ),
+    actions: (
+      <>
+        <EditOutlined
+          style={{
+            fontSize: "20px",
+            color: "#f58a78",
+            marginRight: "10px",
+          }}
+        />
+        <DeleteOutlined style={{ fontSize: "20px", color: "#f58a78" }} />
+      </>
+    ),
+  },
+  {
+    key: "7",
+    name: (
+      <>
+        <Avatar.Group>
+          <Avatar
+            className="shape-avatar"
+            shape="square"
+            size={40}
+            src={face2}
+          ></Avatar>
+        </Avatar.Group>{" "}
+      </>
+    ),
+    function: (
+      <>
+        <div className="author-info">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do</p>
+        </div>
+      </>
+    ),
+
+    status: (
+      <>
+        {/*  Bật tắt svg icon con mắt */}
+        <EyeFilled
+          style={{
+            fontSize: "20px",
+            color: "#f58a78",
+          }}
+        />
+      </>
+    ),
+    employed: (
+      <>
+        <Checkbox
+          onChange={onChange}
+          style={{
+            fontSize: "20px",
+            color: "#f58a78",
+          }}
+        />
+      </>
+    ),
+    actions: (
+      <>
+        <EditOutlined
+          style={{
+            fontSize: "20px",
+            color: "#f58a78",
+            marginRight: "10px",
+          }}
+        />
+        <DeleteOutlined style={{ fontSize: "20px", color: "#f58a78" }} />
+      </>
+    ),
+  },
+];
+
+function News() {
+  const onChange = (e) => console.log(`radio checked:${e.target.value}`);
+
+  return (
+    <>
+      <div className="tabled">
+        <Row gutter={[24, 0]}>
+          <Col xs="24" xl={24}>
+            <Card
+              bordered={false}
+              className="criclebox tablespace mb-24"
+              title="Quản lý bài viết"
+              extra={
+                <>
+                  <Radio.Group onChange={onChange} defaultValue="a">
+                    <Radio.Button value="a">Hiện thị</Radio.Button>
+                    <Radio.Button value="b">Không hiện thị</Radio.Button>
+                  </Radio.Group>
+                </>
+              }
+            >
+              <div className="table-responsive">
+                <Table
+                  columns={columns}
+                  dataSource={data}
+                  pagination={{ pageSize: 5 }} // Số dòng trên mỗi trang
+                />
+              </div>
+            </Card>
+          </Col>
+        </Row>
+      </div>
+    </>
+  );
+}
   
   export default News ;
   

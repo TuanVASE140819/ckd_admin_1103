@@ -104,6 +104,41 @@ function Sidenav({ color }) {
     </svg>,
   ];
 
+  const policy = [
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      key={0}
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M3 6C3 4.34315 4.34315 3 6 3H16C16.3788 3 16.725 3.214 16.8944 3.55279C17.0638 3.89157 17.0273 4.29698 16.8 4.6L14.25 8L16.8 11.4C17.0273 11.703 17.0638 12.1084 16.8944 12.4472C16.725 12.786 16.3788 13 16 13H6C5.44772 13 5 13.4477 5 14V17C5 17.5523 4.55228 18 4 18C3.44772 18 3 17.5523 3 17V6Z"
+        fill={color}
+      ></path>
+    </svg>,
+  ];
+
+  const image = [
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      key={0}
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M3 6C3 4.34315 4.34315 3 6 3H16C16.3788 3 16.725 3.214 16.8944 3.55279C17.0638 3.89157 17.0273 4.29698 16.8 4.6L14.25 8L16.8 11.4C17.0273 11.703 17.0638 12.1084 16.8944 12.4472C16.725 12.786 16.3788 13 16 13H6C5.44772 13 5 13.4477 5 14V17C5 17.5523 4.55228 18 4 18C3.44772 18 3 17.5523 3 17V6Z"
+        fill={color}
+      ></path>
+    </svg>,
+  ];
   const profile = [
     <svg
       width="20"
@@ -163,8 +198,7 @@ function Sidenav({ color }) {
   return (
     <>
       <div className="brand">
-        <img src={logo} alt="" />
-        <span>CKD Admin</span>
+        <img src="https://ckdvietnam.com/assets/images/logo.png" alt="" />
       </div>
       <hr />
       <Menu theme="light" mode="inline">
@@ -178,9 +212,7 @@ function Sidenav({ color }) {
             >
               {dashboard}
             </span>
-            <span className="label">
-              Trang chủ
-            </span>
+            <span className="label">Home</span>
           </NavLink>
         </Menu.Item>
         <Menu.Item key="2">
@@ -193,42 +225,10 @@ function Sidenav({ color }) {
             >
               {tables}
             </span>
-            <span className="label">
-              Quản lý thương hiệu
-            </span>
+            <span className="label">Quản lý sản phẩm</span>
           </NavLink>
         </Menu.Item>
         <Menu.Item key="3">
-          <NavLink to="/users">
-            <span
-              className="icon"
-              style={{
-                background: page === "billing" ? color : "",
-              }}
-            >
-              {billing}
-            </span>
-            <span className="label">
-              Quản lý người dùng
-            </span>
-          </NavLink>
-        </Menu.Item>
-        <Menu.Item key="4">
-          <NavLink to="/order">
-            <span
-              className="icon"
-              style={{
-                background: page === "rtl" ? color : "",
-              }}
-            >
-              {rtl}
-            </span>
-            <span className="label">
-              Quản lý đơn hàng
-            </span>
-          </NavLink>
-        </Menu.Item>
-        <Menu.Item key="5">
           <NavLink to="/news">
             <span
               className="icon"
@@ -238,11 +238,63 @@ function Sidenav({ color }) {
             >
               {rtl}
             </span>
-            <span className="label">
-              Quản lý bài viết
-            </span>
+            <span className="label">Quản lý bài viết</span>
           </NavLink>
         </Menu.Item>
+        <Menu.Item key="4">
+          <NavLink to="/policy">
+            <span
+              className="icon"
+              style={{
+                background: page === "policy" ? color : "",
+              }}
+            >
+              {policy}
+            </span>
+            <span className="label"> Quản Lý chính sách </span>
+          </NavLink>
+        </Menu.Item>
+        <Menu.Item key="5">
+          <NavLink to="/image">
+            <span
+              className="icon"
+              style={{
+                background: page === "image" ? color : "",
+              }}
+            >
+              {image}
+            </span>
+            <span className="label">Quản lý hình ảnh </span>
+          </NavLink>
+        </Menu.Item>
+
+        {/* <Menu.Item key="6">
+          <NavLink to="/users">
+            <span
+              className="icon"
+              style={{
+                background: page === "billing" ? color : "",
+              }}
+            >
+              {billing}
+            </span>
+            <span className="label">Quản lý người dùng</span>
+          </NavLink>
+        </Menu.Item> */}
+        {/* <Menu.Item key="7">
+          <NavLink to="/order">
+            <span
+              className="icon"
+              style={{
+                background: page === "rtl" ? color : "",
+              }}
+            >
+              {rtl}
+            </span>
+            <span className="label">Quản lý đơn hàng</span>
+          </NavLink>
+        </Menu.Item> */}
+
         {/* <Menu.Item className="menu-item-header" key="5">
           Account Pages
         </Menu.Item> */}
@@ -282,10 +334,10 @@ function Sidenav({ color }) {
           <span className="icon" style={{ color }}>
             {dashboard}
           </span>
-          <h6>Need Help?</h6>
-          <p>Please check our docs</p>
+          <h6>Bạn có cần giúp đỡ?</h6>
+          <p>Tôi có thể giúp bạn</p>
           <Button type="primary" className="ant-btn-sm ant-btn-block">
-            DOCUMENTATION
+            TÀI LIỆU
           </Button>
         </div>
       </div>
