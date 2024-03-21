@@ -27,6 +27,7 @@ import Order from "./pagesindex/Order";
 import News from "./pagesindex/News";
 import Policy from "./pagesindex/Policy";
 import ImageStructure from "./pagesindex/ImageStructure";
+import Review from "./pagesindex/Review";
 function App() {
   return (
     <div className="App">
@@ -41,6 +42,7 @@ function App() {
           <Route exact path="/news" component={News} />
           <Route exact path="/policy" component={Policy} />
           <Route exact path="/image" component={ImageStructure} />
+          <Route exact path="/review" component={Review} />
           <Route exact path="/billing" component={Billing} />
           <Route exact path="/order" component={Order} />
           <Route exact path="/profile" component={Profile} />

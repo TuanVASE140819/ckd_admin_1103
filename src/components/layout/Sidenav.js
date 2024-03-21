@@ -267,6 +267,19 @@ function Sidenav({ color }) {
             <span className="label">Quản lý hình ảnh </span>
           </NavLink>
         </Menu.Item>
+        <Menu.Item key="6">
+          <NavLink to="/review">
+            <span
+              className="icon"
+              style={{
+                background: page === "review" ? color : "",
+              }}
+            >
+              {image}
+            </span>
+            <span className="label">Quản lý bình luận </span>
+          </NavLink>
+        </Menu.Item>
 
         {/* <Menu.Item key="6">
           <NavLink to="/users">
