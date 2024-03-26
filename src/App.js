@@ -10,7 +10,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 import { Switch, Route, Redirect } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Home from "./pages/Home";
 import Tables from "./pages/Tables";
 import Billing from "./pages/Billing";
@@ -29,22 +29,33 @@ import News from "./pagesindex/News";
 import Policy from "./pagesindex/Policy";
 import ImageStructure from "./pagesindex/ImageStructure";
 import Review from "./pagesindex/Review";
+import Data from "./pagesindex/Data";
+import Static from "./pagesindex/Static";
+import Thame from "./pagesindex/Thame";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
 
+  useEffect(() => {
+    // Kiểm tra dữ liệu đăng nhập trong local storage hoặc session storage khi ứng dụng được khởi chạy
+    const loggedInUser = localStorage.getItem("loggedInUser");
+    if (loggedInUser) {
+      setIsLoggedIn(true);
+      setUser(JSON.parse(loggedInUser));
+    }
+  }, []);
+
   const handleLogin = (userInfo) => {
     // Thực hiện xác thực thông tin đăng nhập ở đây (ví dụ: gửi yêu cầu đăng nhập đến máy chủ)
-    // Sau khi xác thực thành công, cập nhật trạng thái đăng nhập và thông tin người dùng
-    if (
-      userInfo.username === "admin" &&
-      userInfo.password === "123"
-    ) {
+    // Sau khi xác thực thành công, lưu trạng thái đăng nhập vào local storage hoặc session storage và cập nhật trạng thái đăng nhập và thông tin người dùng
+    if (userInfo.username === "admin" && userInfo.password === "123") {
       setIsLoggedIn(true);
-      setUser({
+      const user = {
         username: userInfo.username,
         isAdmin: true,
-      });
+      };
+      setUser(user);
+      localStorage.setItem("loggedInUser", JSON.stringify(user)); // Lưu trạng thái đăng nhập vào local storage
     } else {
       // Xử lý trường hợp không đăng nhập thành công
       console.log("Đăng nhập không thành công");
@@ -74,8 +85,11 @@ function App() {
             <Route exact path="/policy" component={Policy} />
             <Route exact path="/image" component={ImageStructure} />
             <Route exact path="/review" component={Review} />
+            <Route exact path="/data" component={Data} />
+            <Route exact path="/static" component={Static} />
             <Route exact path="/billing" component={Billing} />
             <Route exact path="/order" component={Order} />
+            <Route exact path="/thame" component={Thame} />
             <Route exact path="/profile" component={Profile} />
             <Redirect from="*" to="/dashboard" />
           </Main>

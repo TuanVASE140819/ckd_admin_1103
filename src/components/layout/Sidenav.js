@@ -215,6 +215,19 @@ function Sidenav({ color }) {
             <span className="label">Home</span>
           </NavLink>
         </Menu.Item>
+        <Menu.Item key="7">
+          <NavLink to="/static">
+            <span
+              className="icon"
+              style={{
+                background: page === "/static" ? color : "",
+              }}
+            >
+              {image}
+            </span>
+            <span className="label">Thống kê AI </span>
+          </NavLink>
+        </Menu.Item>
         <Menu.Item key="2">
           <NavLink to="/brand">
             <span
@@ -278,6 +291,32 @@ function Sidenav({ color }) {
               {image}
             </span>
             <span className="label">Quản lý bình luận </span>
+          </NavLink>
+        </Menu.Item>
+        <Menu.Item key="6">
+          <NavLink to="/data">
+            <span
+              className="icon"
+              style={{
+                background: page === "data" ? color : "",
+              }}
+            >
+              {image}
+            </span>
+            <span className="label">Quản lý Data </span>
+          </NavLink>
+        </Menu.Item>
+        <Menu.Item key="8">
+          <NavLink to="/thame">
+            <span
+              className="icon"
+              style={{
+                background: page === "thame" ? color : "",
+              }}
+            >
+              {image}
+            </span>
+            <span className="label">Quản lý Chủ đề </span>
           </NavLink>
         </Menu.Item>
 

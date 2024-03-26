@@ -249,6 +249,12 @@ const setting = [
   </svg>,
 ];
 
+
+const handleLogout = () => {
+  // Xử lý đăng xuất ở đây
+  localStorage.removeItem("loggedInUser");
+  window.location.href = "/sign-in";
+};
 function Header({
   placement,
   name,
@@ -293,16 +299,8 @@ function Header({
           </div>
         </Col>
         <Col span={24} md={18} className="header-control">
-          <Badge size="small" count={4}>
-            <Dropdown overlay={menu} trigger={["click"]}>
-              <a
-                href="#pablo"
-                className="ant-dropdown-link"
-                onClick={(e) => e.preventDefault()}
-              >
-                {bell}
-              </a>
-            </Dropdown>
+          <Badge size="small" count={0}>
+            {bell}
           </Badge>
           <Button type="link" onClick={showDrawer}>
             {logsetting}
@@ -421,10 +419,9 @@ function Header({
               </div>
             </div>
           </Drawer>
-          <Link to="/sign-in" className="btn-sign-in">
-            {profile}
-            <span>Sign in</span>
-          </Link>
+          <Button type="link" onClick={handleLogout}>
+            Logout
+          </Button>
           <Input
             className="header-search"
             placeholder="Type here..."
