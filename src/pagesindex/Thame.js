@@ -31,53 +31,17 @@ const gridStyle = {
 const data = [
   {
     key: "1",
-    Image: "",
+    Image:
+      "https://firebasestorage.googleapis.com/v0/b/ckd--project.appspot.com/o/web%20VietNam-10.png?alt=media&token=19169340-01f5-4283-871f-0252368d5c7f",
+    title: "Green",
 
-    title: "Logo",
     createAt: "2021-09-01",
   },
   {
     key: "2",
     Image:
       "https://skin-face-scan.vercel.app/static/media/aigirl.ca96aef0548a3226dfbe.png",
-    title: "banner1",
-    createAt: "2021-09-01",
-  },
-  {
-    key: "3",
-    Image:
-      "https://skin-face-scan.vercel.app/static/media/inforindex.adde61517d5e30591c00.png",
-    title: "banner2",
-    createAt: "2021-09-01",
-  },
-  {
-    key: "4",
-    Image: "",
-    title: "Logo",
-    createAt: "2021-09-01",
-  },
-  {
-    key: "5",
-    Image: "",
-    title: "Logo",
-    createAt: "2021-09-01",
-  },
-  {
-    key: "6",
-    Image: "",
-    title: "Logo",
-    createAt: "2021-09-01",
-  },
-  {
-    key: "7",
-    Image: "",
-    title: "Logo",
-    createAt: "2021-09-01",
-  },
-  {
-    key: "8",
-    Image: "",
-    title: "Logo",
+    title: "Orange",
     createAt: "2021-09-01",
   },
 ];
@@ -172,61 +136,13 @@ function Thame() {
                   }}
                 />
               }
-              actions={[
-                <EditOutlined key="edit" onClick={() => showModal(item)} />,
-              ]}
+              actions={[]}
             >
               <Meta title={item.title} description={item.createAt} />
             </Card>
           </Col>
         ))}
       </Row>
-      <Modal
-        title={currentItem && currentItem.title}
-        visible={isModalVisible}
-        onOk={handleOk}
-        onCancel={handleCancel}
-      >
-        {currentItem && (
-          <>
-            {/* Quy đinh kích thức ảnh */}
-            <p
-              style={{
-                textAlign: "center",
-                color: "red",
-                fontSize: "12px",
-              }}
-            >
-              Kích thước ảnh: 200x200
-            </p>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <p>
-                <strong>Hình ảnh:</strong>
-              </p>
-              <Upload {...uploadProps}>
-                {currentItem.Image ? (
-                  <img
-                    src={currentItem.Image}
-                    alt="avatar"
-                    style={{ width: "100%" }}
-                  />
-                ) : (
-                  <div style={{ textAlign: "center" }}>
-                    <UploadOutlined />
-                    <div style={{ marginTop: 8 }}>Upload</div>
-                  </div>
-                )}
-              </Upload>
-            </div>
-          </>
-        )}
-      </Modal>
     </>
   );
 }
