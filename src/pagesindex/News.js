@@ -53,7 +53,7 @@ const onChange = (e) => {
 };
 const { Title } = Typography;
 
-// table code start
+// table code startgi
 const columns = [
   {
     //STT

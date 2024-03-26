@@ -10,6 +10,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 import { Switch, Route, Redirect } from "react-router-dom";
+import React, { useState } from "react";
 import Home from "./pages/Home";
 import Tables from "./pages/Tables";
 import Billing from "./pages/Billing";
@@ -29,25 +30,56 @@ import Policy from "./pagesindex/Policy";
 import ImageStructure from "./pagesindex/ImageStructure";
 import Review from "./pagesindex/Review";
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
+
+  const handleLogin = (userInfo) => {
+    // Thực hiện xác thực thông tin đăng nhập ở đây (ví dụ: gửi yêu cầu đăng nhập đến máy chủ)
+    // Sau khi xác thực thành công, cập nhật trạng thái đăng nhập và thông tin người dùng
+    if (
+      userInfo.username === "admin" &&
+      userInfo.password === "123"
+    ) {
+      setIsLoggedIn(true);
+      setUser({
+        username: userInfo.username,
+        isAdmin: true,
+      });
+    } else {
+      // Xử lý trường hợp không đăng nhập thành công
+      console.log("Đăng nhập không thành công");
+    }
+  };
+
   return (
     <div className="App">
       <Switch>
-        <Route path="/sign-up" exact component={SignUp} />
-        <Route path="/sign-in" exact component={SignIn} />
-        <Main>
-          <Route exact path="/dashboard" component={Home} />
-          {/* <Route exact path="/tables" component={Brand} /> */}
-          <Route exact path="/brand" component={Brand} />
-          <Route exact path="/users" component={User} />
-          <Route exact path="/news" component={News} />
-          <Route exact path="/policy" component={Policy} />
-          <Route exact path="/image" component={ImageStructure} />
-          <Route exact path="/review" component={Review} />
-          <Route exact path="/billing" component={Billing} />
-          <Route exact path="/order" component={Order} />
-          <Route exact path="/profile" component={Profile} />
-          <Redirect from="*" to="/dashboard" />
-        </Main>
+        {!isLoggedIn ? (
+          <Switch>
+            <Route exact path="/sign-in">
+              <SignIn onLogin={handleLogin} />
+            </Route>
+            <Route exact path="/sign-up">
+              <SignUp />
+            </Route>
+            <Redirect from="*" to="/sign-in" />
+          </Switch>
+        ) : (
+          <Main>
+            <Route exact path="/dashboard" component={Home} />
+            {/* <Route exact path="/tables" component={Brand} /> */}
+            <Route exact path="/brand" component={Brand} />
+            <Route exact path="/users" component={User} />
+            <Route exact path="/news" component={News} />
+            <Route exact path="/policy" component={Policy} />
+            <Route exact path="/image" component={ImageStructure} />
+            <Route exact path="/review" component={Review} />
+            <Route exact path="/billing" component={Billing} />
+            <Route exact path="/order" component={Order} />
+            <Route exact path="/profile" component={Profile} />
+            <Redirect from="*" to="/dashboard" />
+          </Main>
+        )}
       </Switch>
     </div>
   );

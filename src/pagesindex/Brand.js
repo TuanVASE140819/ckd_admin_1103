@@ -15,248 +15,168 @@ import {
   Card,
   Radio,
   Table,
-  Upload,
-  message,
-  Progress,
   Button,
-  Avatar,
+  Select,
+  Space,
   Typography,
-  Timeline,
-  Tooltip,
+  Modal,
+  Divider,
 } from "antd";
+import { Input } from "antd";
+import React, { useState, useRef } from "react";
 
-import {
-  RightOutlined,
-  MenuUnfoldOutlined,
-  ToTopOutlined,
-} from "@ant-design/icons";
 import { Link } from "react-router-dom";
-import card from "../assets/images/info-card-1.jpg";
-import Text from "antd/lib/typography/Text";
-import Paragraph from "antd/lib/skeleton/Paragraph";
-
-import ava1 from "../assets/images/logo-shopify.svg";
-import ava2 from "../assets/images/logo-atlassian.svg";
-import ava3 from "../assets/images/logo-slack.svg";
-import ava4 from "../assets/images/logo-spotify.svg";
-import ava5 from "../assets/images/logo-jira.svg";
-import ava6 from "../assets/images/logo-invision.svg";
-import team1 from "../assets/images/team-1.jpg";
-import team2 from "../assets/images/team-2.jpg";
-import team3 from "../assets/images/team-3.jpg";
-import team4 from "../assets/images/team-4.jpg";
-import { useState } from "react";
+import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
+import { message, Upload } from "antd";
 
 const { Title } = Typography;
 
-const formProps = {
-  name: "file",
-  action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
-  headers: {
-    authorization: "authorization-text",
-  },
-  onChange(info) {
-    if (info.file.status !== "uploading") {
-      console.log(info.file, info.fileList);
-    }
-    if (info.file.status === "done") {
-      message.success(`${info.file.name} file uploaded successfully`);
-    } else if (info.file.status === "error") {
-      message.error(`${info.file.name} file upload failed.`);
-    }
-  },
-};
-
 const list = [
   {
-    img: ava1,
-    Title: "Soft UI Shopify Version",
-    bud: "$14,000",
-    progress: <Progress percent={60} size="small" />,
-    member: (
-      <div className="avatar-group mt-2">
-        <Tooltip placement="bottom" title="Ryan Tompson">
-          <img className="tootip-img" src={team1} alt="" />
-        </Tooltip>
-        <Tooltip placement="bottom" title="Romina Hadid">
-          <img className="tootip-img" src={team2} alt="" />
-        </Tooltip>
-        <Tooltip placement="bottom" title="Alexander Smith">
-          <img className="tootip-img" src={team3} alt="" />
-        </Tooltip>
-        <Tooltip placement="bottom" title="Jessica Doe">
-          <img className="tootip-img" src={team4} alt="" />
-        </Tooltip>
-      </div>
-    ),
+    img: "https://skin-face-scan.vercel.app/static/media/product1.322d0291da915e35b43b.png",
+    Title: "Kem dưỡng da",
+    desc: "Kem dưỡng trắng da toàn thân",
+    brand: "LACTOR",
   },
   {
-    img: ava2,
-    Title: "Progress Track",
-    bud: "$3,000",
-    progress: <Progress percent={10} size="small" />,
-    member: (
-      <div className="avatar-group mt-2">
-        <Tooltip placement="bottom" title="Ryan Tompson">
-          <img className="tootip-img" src={team1} alt="" />
-        </Tooltip>
-        <Tooltip placement="bottom" title="Romina Hadid">
-          <img className="tootip-img" src={team2} alt="" />
-        </Tooltip>
-      </div>
-    ),
+    img: "https://skin-face-scan.vercel.app/static/media/product1.322d0291da915e35b43b.png",
+    Title: "Kem dưỡng da",
+    desc: "Kem dưỡng trắng da toàn thân",
+    brand: "CKD",
   },
   {
-    img: ava3,
-    Title: "Fix Platform Errors",
-    bud: "Not Set",
-    progress: <Progress percent={100} size="small" status="active" />,
-    member: (
-      <div className="avatar-group mt-2">
-        <Tooltip placement="bottom" title="Ryan Tompson">
-          <img className="tootip-img" src={team1} alt="" />
-        </Tooltip>
-        <Tooltip placement="bottom" title="Romina Hadid">
-          <img className="tootip-img" src={team1} alt="" />
-        </Tooltip>
-        <Tooltip placement="bottom" title="Alexander Smith">
-          <img className="tootip-img" src={team3} alt="" />
-        </Tooltip>
-      </div>
-    ),
+    img: "https://skin-face-scan.vercel.app/static/media/product1.322d0291da915e35b43b.png",
+    Title: "Kem dưỡng da",
+    desc: "Kem dưỡng trắng da toàn thân",
+    brand: "CKD",
   },
   {
-    img: ava4,
-    Title: "Launch new Mobile App",
-    bud: "$20,600",
-    progress: <Progress percent={100} size="small" status="active" />,
-    member: (
-      <div className="avatar-group mt-2">
-        <Tooltip placement="bottom" title="Ryan Tompson">
-          <img className="tootip-img" src={team1} alt="" />
-        </Tooltip>
-        <Tooltip placement="bottom" title="Romina Hadid">
-          <img className="tootip-img" src={team2} alt="" />
-        </Tooltip>
-      </div>
-    ),
+    img: "https://skin-face-scan.vercel.app/static/media/product1.322d0291da915e35b43b.png",
+    Title: "Kem dưỡng da",
+    desc: "Kem dưỡng trắng da toàn thân",
+    brand: "CKD",
   },
   {
-    img: ava5,
-    Title: "Add the New Landing Page",
-    bud: "$4,000",
-    progress: <Progress percent={80} size="small" />,
-    member: (
-      <div className="avatar-group mt-2">
-        <Tooltip placement="bottom" title="Ryan Tompson">
-          <img className="tootip-img" src={team1} alt="" />
-        </Tooltip>
-        <Tooltip placement="bottom" title="Romina Hadid">
-          <img className="tootip-img" src={team2} alt="" />
-        </Tooltip>
-        <Tooltip placement="bottom" title="Alexander Smith">
-          <img className="tootip-img" src={team3} alt="" />
-        </Tooltip>
-        <Tooltip placement="bottom" title="Jessica Doe">
-          <img className="tootip-img" src={team4} alt="" />
-        </Tooltip>
-      </div>
-    ),
+    img: "https://skin-face-scan.vercel.app/static/media/product1.322d0291da915e35b43b.png",
+    Title: "Kem dưỡng da",
+    desc: "Kem dưỡng trắng da toàn thân",
+    brand: "CKD",
   },
-
   {
-    img: ava6,
-    Title: "Redesign Online Store",
-    bud: "$2,000",
-    progress: (
-      <Progress
-        percent={100}
-        size="small"
-        status="exception"
-        format={() => "Cancel"}
-      />
-    ),
-    member: (
-      <div className="avatar-group mt-2">
-        <Tooltip placement="bottom" title="Ryan Tompson">
-          <img className="tootip-img" src={team1} alt="" />
-        </Tooltip>
-        <Tooltip placement="bottom" title="Romina Hadid">
-          <img className="tootip-img" src={team2} alt="" />
-        </Tooltip>
-      </div>
-    ),
+    img: "https://skin-face-scan.vercel.app/static/media/product1.322d0291da915e35b43b.png",
+    Title: "Kem dưỡng da",
+    desc: "Kem dưỡng trắng da toàn thân",
+    brand: "CKD",
   },
 ];
 
-const timelineList = [
-  {
-    title: "$2,400 - Redesign store",
-    time: "09 JUN 7:20 PM",
-    color: "green",
-  },
-  {
-    title: "New order #3654323",
-    time: "08 JUN 12:20 PM",
-    color: "green",
-  },
-  {
-    title: "Company server payments",
-    time: "04 JUN 3:10 PM",
-  },
-  {
-    title: "New card added for order #4826321",
-    time: "02 JUN 2:45 PM",
-  },
-  {
-    title: "Unlock folders for development",
-    time: "18 MAY 1:30 PM",
-  },
-  {
-    title: "New order #46282344",
-    time: "14 MAY 3:30 PM",
-    color: "gray",
-  },
-];
-
-const uploadProps = {
-  name: "file",
-  action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
-  headers: {
-    authorization: "authorization-text",
-  },
-  onChange(info) {
-    if (info.file.status !== "uploading") {
-      console.log(info.file, info.fileList);
-    }
-    if (info.file.status === "done") {
-      message.success(`${info.file.name} file uploaded successfully`);
-    } else if (info.file.status === "error") {
-      message.error(`${info.file.name} file upload failed.`);
-    }
-  },
+const getBase64 = (img, callback) => {
+  const reader = new FileReader();
+  reader.addEventListener("load", () => callback(reader.result));
+  reader.readAsDataURL(img);
+};
+const beforeUpload = (file) => {
+  const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+  if (!isJpgOrPng) {
+    message.error("You can only upload JPG/PNG file!");
+  }
+  const isLt2M = file.size / 1024 / 1024 < 2;
+  if (!isLt2M) {
+    message.error("Image must smaller than 2MB!");
+  }
+  return isJpgOrPng && isLt2M;
 };
 function Brand() {
+  const [selectedBrand, setSelectedBrand] = useState("ALL");
+  const handleBrandChange = (e) => {
+    setSelectedBrand(e.target.value);
+  };
+  const filteredList =
+    selectedBrand === "ALL"
+      ? list
+      : list.filter((d) => d.brand === selectedBrand);
+
   const onChange = (e) => console.log(`radio checked:${e.target.value}`);
-  const [reverse, setReverse] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [currentAction, setCurrentAction] = useState(null); // new state
+  const [currentProduct, setCurrentProduct] = useState(null); // new state
+
+  const [items, setItems] = useState(["CKD", "LACTOR"]);
+  const [name, setName] = useState("");
+  const inputRef = useRef(null);
+  const onNameChange = (event) => {
+    setName(event.target.value);
+  };
+  const addItem = (e) => {
+    e.preventDefault();
+    setItems([...items, name || "new item"]);
+    setName("");
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 0);
+  };
+  const openModal = (action, product) => {
+    setCurrentAction(action);
+    setCurrentProduct(product);
+    setModalVisible(true);
+  };
+
+  const [loading, setLoading] = useState(false);
+  const [imageUrl, setImageUrl] = useState();
+  const handleChange = (info) => {
+    if (info.file.status === "uploading") {
+      setLoading(true);
+      return;
+    }
+    if (info.file.status === "done") {
+      // Get this url from response in real world.
+      getBase64(info.file.originFileObj, (url) => {
+        setLoading(false);
+        setImageUrl(url);
+      });
+    }
+  };
+
+  const uploadButton = (
+    <button
+      style={{
+        border: 0,
+        background: "none",
+      }}
+      type="button"
+    >
+      {loading ? <LoadingOutlined /> : <PlusOutlined />}
+      <div
+        style={{
+          marginTop: 8,
+        }}
+      >
+        Upload
+      </div>
+    </button>
+  );
   return (
     <>
       <Row gutter={[24, 0]}>
-        <Col xs={24} sm={24} md={12} lg={12} xl={16} className="mb-24">
+        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
           <Card bordered={false} className="criclebox cardbody h-full">
             <div className="project-ant">
               <div>
-                <Title level={5}>Projects</Title>
-                <Paragraph className="lastweek">
-                  done this month<span className="blue">40%</span>
-                </Paragraph>
+                <Title level={5}>Sản phẩm giới thiệu</Title>{" "}
+                <Button
+                  type="primary"
+                  className="ant-btn ant-btn-primary"
+                  onClick={() => openModal("add", null)} // updated onClick
+                >
+                  Thêm sản phẩm
+                </Button>
               </div>
               <div className="ant-filtertabs">
                 <div className="antd-pro-pages-dashboard-analysis-style-salesExtra">
-                  <Radio.Group onChange={onChange} defaultValue="a">
-                    <Radio.Button value="a">ALL</Radio.Button>
-                    <Radio.Button value="b">ONLINE</Radio.Button>
-                    <Radio.Button value="c">STORES</Radio.Button>
+                  <Radio.Group onChange={handleBrandChange} defaultValue="ALL">
+                    <Radio.Button value="CKD">CKD</Radio.Button>
+                    <Radio.Button value="LACTOR">LACTOR</Radio.Button>
+                    <Radio.Button value="ALL">ALL</Radio.Button>
                   </Radio.Group>
                 </div>
               </div>
@@ -265,37 +185,87 @@ function Brand() {
               <table className="width-100">
                 <thead>
                   <tr>
-                    <th>COMPANIES</th>
-                    <th>MEMBERS</th>
-                    <th>BUDGET</th>
-                    <th>COMPLETION</th>
+                    <th>STT</th>
+                    <th>Sản phẩm</th>
+                    <th>Mô tả</th>
+                    <th>Brand</th>
+                    <th>Hành động</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {list.map((d, index) => (
-                    <tr key={index}>
-                      <td>
-                        <h6>
-                          <img src={d.img} alt="" className="avatar-sm mr-10" />{" "}
-                          {d.Title}
-                        </h6>
-                      </td>
-                      <td>{d.member}</td>
-                      <td>
-                        <span className="text-xs font-weight-bold">
-                          {d.bud}{" "}
-                        </span>
-                      </td>
-                      <td>
-                        <div className="percent-progress">{d.progress}</div>
+                  {filteredList.length > 0 ? (
+                    filteredList.map((d, index) => (
+                      <tr key={index}>
+                        <td>
+                          <h6>
+                            <span className="text-xs font-weight-bold">
+                              {index + 1}
+                            </span>
+                          </h6>
+                        </td>
+                        <td>
+                          <h6>
+                            <img
+                              src={d.img}
+                              alt=""
+                              className="avatar-sm mr-10"
+                            />{" "}
+                            {d.Title}
+                          </h6>
+                        </td>
+                        <td>{d.desc}</td>
+                        <td>
+                          <span className="text-xs font-weight-bold">
+                            {d.brand}
+                          </span>
+                        </td>
+                        <td>
+                          <Button
+                            type="primary"
+                            className="ant-btn ant-btn-primary mr-5"
+                            onClick={() => openModal("edit", d)} // updated onClick
+                          >
+                            Sửa
+                          </Button>
+
+                          <Button
+                            type="primary"
+                            danger
+                            className="ant-btn ant-btn-primary"
+                          >
+                            Xóa
+                          </Button>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={5}>
+                        <div className="ant-empty ant-empty-normal">
+                          <div className="ant-empty-image">
+                            <svg
+                              viewBox="64 64 896 896"
+                              focusable="false"
+                              className=""
+                              data-icon="smile"
+                              width="184px"
+                              height="184px"
+                              fill="currentColor"
+                              aria-hidden="true"
+                            ></svg>
+                          </div>
+                          <p className="ant-empty-description">
+                            Không có sản phẩm nào
+                          </p>
+                        </div>
                       </td>
                     </tr>
-                  ))}
+                  )}
                 </tbody>
               </table>
             </div>
             <div className="uploadfile shadow-none">
-              <Upload {...uploadProps}>
+              {/* <Upload {...uploadProps}>
                 <Button
                   type="dashed"
                   className="ant-full-box"
@@ -303,41 +273,172 @@ function Brand() {
                 >
                   <span className="click">Click to Upload</span>
                 </Button>
-              </Upload>
-            </div>
-          </Card>
-        </Col>
-        <Col xs={24} sm={24} md={12} lg={12} xl={8} className="mb-24">
-          <Card bordered={false} className="criclebox h-full">
-            <div className="timeline-box">
-              <Title level={5}>Orders History</Title>
-              <Paragraph className="lastweek" style={{ marginBottom: 24 }}>
-                this month <span className="bnb2">20%</span>
-              </Paragraph>
-
-              <Timeline
-                pending="Recording..."
-                className="timelinelist"
-                reverse={reverse}
-              >
-                {timelineList.map((t, index) => (
-                  <Timeline.Item color={t.color} key={index}>
-                    <Title level={5}>{t.title}</Title>
-                    <Text>{t.time}</Text>
-                  </Timeline.Item>
-                ))}
-              </Timeline>
-              <Button
-                type="primary"
-                className="width-100"
-                onClick={() => setReverse(!reverse)}
-              >
-                {<MenuUnfoldOutlined />} REVERSE
-              </Button>
+              </Upload> */}
             </div>
           </Card>
         </Col>
       </Row>
+      <Modal
+        title={currentAction === "add" ? "Thêm sản phẩm" : "Sửa sản phẩm"} // updated title
+        visible={modalVisible}
+        onCancel={() => setModalVisible(false)}
+        footer={null}
+      >
+        {/* Nội dung của Modal ở đây */}
+        {currentAction === "add" ? (
+          <div>
+            <Title level={5}>Thêm sản phẩm</Title>
+            <Input placeholder="Tên sản phẩm" className="mb-2" />
+            <Input placeholder="Mô tả" className="mb-2" />
+            <Select
+              style={{
+                width: 300,
+              }}
+              className="mb-2"
+              placeholder="Chọn brand"
+              dropdownRender={(menu) => (
+                <>
+                  {menu}
+                  <Divider
+                    style={{
+                      margin: "8px 0",
+                    }}
+                  />
+                  <Space
+                    style={{
+                      padding: "0 8px 4px",
+                    }}
+                  >
+                    <Input
+                      placeholder="Please enter item"
+                      ref={inputRef}
+                      value={name}
+                      onChange={onNameChange}
+                      onKeyDown={(e) => e.stopPropagation()}
+                    />
+                    <Button
+                      type="text"
+                      icon={<PlusOutlined />}
+                      onClick={addItem}
+                    >
+                      Add item
+                    </Button>
+                  </Space>
+                </>
+              )}
+              options={items.map((item) => ({
+                label: item,
+                value: item,
+              }))}
+            />
+
+            <Upload
+              name="avatar"
+              listType="picture-card"
+              className="avatar-uploader"
+              showUploadList={false}
+              action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+              beforeUpload={beforeUpload}
+              onChange={handleChange}
+            >
+              {imageUrl ? (
+                <img
+                  src={imageUrl}
+                  alt="avatar"
+                  style={{
+                    width: "100%",
+                  }}
+                />
+              ) : (
+                uploadButton
+              )}
+            </Upload>
+            <div style={{ textAlign: "right" }}>
+              <Button type="primary" className="ant-btn ant-btn-primary m-2">
+                Thêm sản phẩm
+              </Button>
+              {/* nút xóa nội dung của Modal */}
+            </div>
+          </div>
+        ) : (
+          <div>
+            <div>
+              <Title level={5}>Thêm sản phẩm</Title>
+              <Input placeholder="Tên sản phẩm" className="mb-2" />
+              <Input placeholder="Mô tả" className="mb-2" />
+              <Select
+                style={{
+                  width: 300,
+                }}
+                className="mb-2"
+                placeholder="Chọn brand"
+                dropdownRender={(menu) => (
+                  <>
+                    {menu}
+                    <Divider
+                      style={{
+                        margin: "8px 0",
+                      }}
+                    />
+                    <Space
+                      style={{
+                        padding: "0 8px 4px",
+                      }}
+                    >
+                      <Input
+                        placeholder="Please enter item"
+                        ref={inputRef}
+                        value={name}
+                        onChange={onNameChange}
+                        onKeyDown={(e) => e.stopPropagation()}
+                      />
+                      <Button
+                        type="text"
+                        icon={<PlusOutlined />}
+                        onClick={addItem}
+                      >
+                        Add item
+                      </Button>
+                    </Space>
+                  </>
+                )}
+                options={items.map((item) => ({
+                  label: item,
+                  value: item,
+                }))}
+              />
+
+              <Upload
+                name="avatar"
+                listType="picture-card"
+                className="avatar-uploader"
+                showUploadList={false}
+                action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+                beforeUpload={beforeUpload}
+                onChange={handleChange}
+              >
+                {imageUrl ? (
+                  <img
+                    src={imageUrl}
+                    alt="avatar"
+                    style={{
+                      width: "100%",
+                    }}
+                  />
+                ) : (
+                  uploadButton
+                )}
+              </Upload>
+              <div style={{ textAlign: "right" }}>
+                <Button type="primary" className="ant-btn ant-btn-primary m-2">
+                  Thêm sản phẩm
+                </Button>
+                {/* nút xóa nội dung của Modal */}
+              </div>
+            </div>
+          </div>
+        )}
+      </Modal>
     </>
   );
 }
