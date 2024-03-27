@@ -1,11 +1,12 @@
 // tôi muốn dùng Drawer của antdesign
 
 // Path: src/pagesindex/Review.js
-
+import { Formik, Field, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
 import React, { useEffect, useState } from "react";
 import { Table } from "antd";
 import { Drawer, Button } from "antd";
-import { Form, Input, Radio, Checkbox } from "antd";
+import { Input, Radio, Checkbox } from "antd";
 import { Upload, message, Progress } from "antd";
 import { Typography } from "antd";
 import { Row, Col } from "antd";
@@ -19,7 +20,11 @@ import { TreeSelect } from "antd";
 const { Title } = Typography;
 const { Option } = Select;
 const { RangePicker } = DatePicker;
-
+const validationSchema = Yup.object().shape({
+  name: Yup.string().required("Bạn chưa nhập tên!"),
+  description: Yup.string().required("Bạn chưa nhập mô tả!"),
+  avatar: Yup.string().required("Bạn chưa nhập ảnh đại diện!"),
+});
 const Review = () => {
   const [review, setReview] = useState([]);
   const [currentRecord, setCurrentRecord] = useState(null); // Add this line
@@ -36,6 +41,45 @@ const Review = () => {
     }
   };
 
+  const postData = async (data) => {
+    const dataWithSequenceAndTime = {
+      ...data,
+      no: review.length + 1, // Add a sequence number
+      createdAt: new Date().toISOString(), // Add the current time
+    };
+
+    try {
+      const response = await fetch(
+        "https://sheet.best/api/sheets/f433ce2f-8de0-4322-a076-ae1d6804b66b",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(dataWithSequenceAndTime),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("HTTP error " + response.status);
+      }
+
+      const postData = await response.json();
+      console.log("Data Posted: ", postData);
+
+      message.success("Thêm thành công"); // Display success message
+      getData(); // Update the review list
+    } catch (error) {
+      console.log("Failed to post data: ", error);
+      message.error("Thêm thất bại"); // Display failure message
+    }
+  };
+  const [addData, setAddData] = useState({
+    name: "",
+    description: "",
+    avatar: "",
+    date: new Date().toString(),
+  });
   useEffect(() => {
     getData();
   }, []);
@@ -138,46 +182,79 @@ const Review = () => {
 
       <Table columns={columns} dataSource={review} />
       <Drawer
-        title={currentAction === "create" ? "Create Comment" : "Edit Comment"} // Change the title based on the current action
+        title={
+          currentAction === "create" ? "Thêm Bình Luận" : "Chỉnh Sửa Bình Luận"
+        } // Change the title based on the current action
         placement="right"
         closable={false}
         onClose={onClose}
         visible={visible}
         width={600}
       >
-        <Form
-          labelCol={{
-            span: 4,
+        <Formik
+          initialValues={{
+            name: currentRecord?.name || "",
+            description: currentRecord?.description || "",
+            avatar: currentRecord?.avatar || "",
           }}
-          wrapperCol={{
-            span: 14,
+          validationSchema={validationSchema}
+          onSubmit={(values, { setSubmitting }) => {
+            postData(values);
+            setSubmitting(false);
+            onClose();
           }}
-          layout="horizontal"
-          style={{
-            maxWidth: 600,
-          }}
-          initialValues={currentRecord} // Set the initial values to the current record
         >
-          <Form.Item label="" name="">
-            <Title level={5}>Tên</Title>
-            <Input />
-          </Form.Item>
-          <Form.Item label="Description" name="description">
-            <Input />
-          </Form.Item>
-          <Form.Item label="Avatar" name="avatar">
-            <Upload
-              name="avatar"
-              action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-              listType="picture"
-            >
-              <Button>Click to upload</Button>
-            </Upload>
-          </Form.Item>
-          <Form.Item label="Date" name="date">
-            <DatePicker />
-          </Form.Item>
-        </Form>
+          {({ isSubmitting }) => (
+            <Form>
+              <div style={{ marginBottom: 16 }}>
+                <label htmlFor="name">Tên</label>
+                <Field id="name" name="name" placeholder="Tên" as={Input} />
+                <ErrorMessage
+                  name="name"
+                  component="div"
+                  className="text-red-500"
+                />
+              </div>
+              <div style={{ marginBottom: 16 }}>
+                <label htmlFor="description">Bình luận</label>
+                <Field
+                  id="description"
+                  name="description"
+                  placeholder="Bình luận"
+                  as={Input}
+                />
+                <ErrorMessage
+                  name="description"
+                  component="div"
+                  className="text-red-500"
+                />
+              </div>
+              <div style={{ marginBottom: 16 }}>
+                <label htmlFor="avatar">Anh đại diện (URL ảnh) </label>
+                <Field
+                  id="avatar"
+                  name="avatar"
+                  placeholder=" Ảnh đại diện"
+                  as={Input}
+                />
+                <ErrorMessage
+                  name="avatar"
+                  component="div"
+                  className="text-red-500"
+                />
+              </div>
+              <Button
+                type="primary"
+                htmlType="submit"
+                disabled={isSubmitting}
+                style={{ marginRight: 16 }}
+              >
+                {isSubmitting ? "Submitting..." : "Submit"}
+              </Button>
+              <Button onClick={onClose}>Cancel</Button>
+            </Form>
+          )}
+        </Formik>
       </Drawer>
     </>
   );
