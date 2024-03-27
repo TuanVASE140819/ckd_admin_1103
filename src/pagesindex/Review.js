@@ -2,7 +2,7 @@
 
 // Path: src/pagesindex/Review.js
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Table } from "antd";
 import { Drawer, Button } from "antd";
 import { Form, Input, Radio, Checkbox } from "antd";
@@ -21,10 +21,38 @@ const { Option } = Select;
 const { RangePicker } = DatePicker;
 
 const Review = () => {
+  const [review, setReview] = useState([]);
+  const [currentRecord, setCurrentRecord] = useState(null); // Add this line
+  const getData = async () => {
+    try {
+      const res = await fetch(
+        "https://sheet.best/api/sheets/f433ce2f-8de0-4322-a076-ae1d6804b66b"
+      );
+      const data = await res.json();
+      setReview(data);
+      console.log("Data Fetched: ", data);
+    } catch (error) {
+      console.log("Failed to fetch data: ", error);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
   const [visible, setVisible] = useState(false);
-  const showDrawer = () => {
+  const [currentAction, setCurrentAction] = useState(null); // Add this line
+
+  const showCreateDrawer = () => {
+    setCurrentAction("create"); // Set the current action to 'create'
     setVisible(true);
   };
+
+  const showEditDrawer = (record) => {
+    setCurrentAction("edit"); // Set the current action to 'edit'
+    setCurrentRecord(record); // Set the current record to the one being edited
+    setVisible(true);
+  };
+
   const onClose = () => {
     setVisible(false);
   };
@@ -32,14 +60,30 @@ const Review = () => {
   const columns = [
     {
       title: "STT",
-      dataIndex: "key",
-      key: "key",
+      dataIndex: "no",
+      key: "no",
       width: "5%",
     },
     {
-      title: "Tiêu đề",
-      dataIndex: "function",
-      key: "function",
+      title: "ảnh đại diện",
+      dataIndex: "avatar",
+      key: "avatar",
+      render: (text, record) => (
+        <img
+          src={record.avatar}
+          alt="avatar"
+          style={{
+            width: 50,
+            height: 50,
+            borderRadius: "50%",
+          }}
+        />
+      ),
+    },
+    {
+      title: "Tên",
+      dataIndex: "name",
+      key: "name",
     },
     {
       title: "Mô tả",
@@ -57,7 +101,7 @@ const Review = () => {
               color: "#f58a78",
               marginRight: 5,
             }}
-            onClick={showDrawer}
+            onClick={() => showEditDrawer(record)} // Pass the record to the function
           >
             Sửa
           </Button>
@@ -67,72 +111,14 @@ const Review = () => {
               color: "white",
               marginRight: 5,
             }}
-            onClick={showDrawer}
+            onClick={() => {
+              console.log("Delete: ", record);
+            }}
           >
             Xóa
           </Button>
         </span>
       ),
-    },
-  ];
-
-  const data = [
-    //    review data
-    {
-      key: "1",
-      function:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do",
-    },
-    {
-      key: "2",
-      function:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do",
-    },
-    {
-      key: "3",
-      function:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do",
-    },
-    {
-      key: "4",
-      function:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do",
-    },
-    {
-      key: "5",
-      function:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do",
-    },
-    {
-      key: "6",
-      function:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do",
-    },
-    {
-      key: "7",
-      function:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do",
-    },
-    {
-      key: "8",
-      function:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do",
     },
   ];
 
@@ -145,14 +131,14 @@ const Review = () => {
           background: "#f58a78",
           color: "white",
         }}
-        onClick={showDrawer}
+        onClick={showCreateDrawer} // Use the new function here
       >
         Tạo bình luận
       </Button>
 
-      <Table columns={columns} dataSource={data} />
+      <Table columns={columns} dataSource={review} />
       <Drawer
-        title="Chi tiết"
+        title={currentAction === "create" ? "Create Comment" : "Edit Comment"} // Change the title based on the current action
         placement="right"
         closable={false}
         onClose={onClose}
@@ -170,37 +156,27 @@ const Review = () => {
           style={{
             maxWidth: 600,
           }}
+          initialValues={currentRecord} // Set the initial values to the current record
         >
-          <Row gutter={16}>
-            <Col span={12}>
-              <h1>Tiêu đề:</h1>
-              <Form.Item>
-                <Input value="Lorem ipsum dolor sit amet" />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <h1>Mô tả:</h1>
-              <Form.Item>
-                <Input value="Lorem ipsum dolor sit amet" />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={16}>
-            <Col span={12}>
-              <h1>Ảnh:</h1>
-              <Form.Item>
-                <Upload name="logo" action="/upload.do" listType="picture">
-                  <Button>Click to upload</Button>
-                </Upload>
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <h1>Trạng thái:</h1>
-              <Form.Item>
-                <Switch defaultChecked />
-              </Form.Item>
-            </Col>
-          </Row>
+          <Form.Item label="" name="">
+            <Title level={5}>Tên</Title>
+            <Input />
+          </Form.Item>
+          <Form.Item label="Description" name="description">
+            <Input />
+          </Form.Item>
+          <Form.Item label="Avatar" name="avatar">
+            <Upload
+              name="avatar"
+              action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+              listType="picture"
+            >
+              <Button>Click to upload</Button>
+            </Upload>
+          </Form.Item>
+          <Form.Item label="Date" name="date">
+            <DatePicker />
+          </Form.Item>
         </Form>
       </Drawer>
     </>

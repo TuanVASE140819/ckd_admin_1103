@@ -3,9 +3,9 @@
 * Muse Ant Design Dashboard - v1.0.0
 =========================================================
 * Product Page: https://www.creative-tim.com/product/muse-ant-design-dashboard
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
+* Copyright 2021 BluePink (https://www.creative-tim.com)
 * Licensed under MIT (https://github.com/creativetimofficial/muse-ant-design-dashboard/blob/main/LICENSE.md)
-* Coded by Creative Tim
+* Coded by BluePink
 =========================================================
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
@@ -983,9 +983,7 @@ button.ant-btn.bell strong {
   padding-top: 15px;
 }
 .bar-chart {
-  background: transparent
-    linear-gradient(62deg, #00369e 0%, #005cfd 53%, #a18dff 100%) 0% 0%
-    no-repeat padding-box;
+  background: transparent linear-gradient(62deg, #f58a78 0%, #f58a78 53%, #f58a78 100%) 0% 0% no-repeat padding-box;
   box-shadow: 0px 4px 6px #0000001f;
 
   border-radius: 8px;
